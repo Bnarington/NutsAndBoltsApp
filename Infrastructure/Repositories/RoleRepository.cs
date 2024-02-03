@@ -20,7 +20,7 @@ public class RoleRepository(DataContext context) : BaseRepository<RoleEntity>(co
         return null!;
     }
 
-    public IQueryable SelectRoleName(string roleName)
+    public IEnumerable<RoleEntity> SelectRoleName(string roleName)
     {
         try
         {
