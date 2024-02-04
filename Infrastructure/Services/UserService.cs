@@ -41,7 +41,6 @@ public class UserService(UserRepository userRepository, RoleRepository roleRepos
 public class RoleService(RoleRepository roleRepository, UserRepository userRepository)
 {
     private readonly RoleRepository _roleRepository = roleRepository;
-    private readonly UserRepository _userRepository = userRepository;
     public string GetOrCreateRole(string roleName)
     {
         var roleEntity = _roleRepository.SelectRoleName(roleName);
