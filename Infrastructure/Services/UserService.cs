@@ -38,7 +38,7 @@ public class UserService(UserRepository userRepository, RoleRepository roleRepos
     }
 }
 
-public class RoleService(RoleRepository roleRepository, UserRepository userRepository)
+public class RoleService(RoleRepository roleRepository)
 {
     private readonly RoleRepository _roleRepository = roleRepository;
     public string GetOrCreateRole(string roleName)
