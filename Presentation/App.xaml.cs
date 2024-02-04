@@ -17,7 +17,7 @@ public partial class App : Application
         builder = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
-                services.AddDbContext<DataContext>(x => x.UseSqlServer(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = D:\Skoldokument\Datalagring\NutsAndBoltsApp\Infrastructure\Data\local_db.mdf; Integrated Security = True; Connect Timeout = 30; Encrypt = True"));
+                services.AddDbContext<DataContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Skoldokument\Datalagring\NutsAndBoltsApp\Infrastructure\Data\local_db.mdf;Integrated Security=True;Connect Timeout=30"));
                 //services.AddSingleton<MainViewModel>();
                 //services.AddSingleton<MainWindow>();
             }).Build();

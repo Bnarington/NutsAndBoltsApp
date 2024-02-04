@@ -1,5 +1,7 @@
-﻿using Infrastructure.Entities;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Entities;
 using Infrastructure.Repositories;
+using System.Runtime.InteropServices;
 
 namespace Infrastructure.Services;
 
@@ -10,26 +12,26 @@ public class ProductService(ProductRepository productRepository, NutRepository n
     private readonly BoltRepository _boltRepository = boltRepository;
 
 
-    public bool CreateProduct(string articleNumber, string title, string description, string ingress, decimal price, string nutName, string nutSize, string boltName, string boltSize)
+    public bool CreateProduct(Product product )
     {
-        if (!_productRepository.Exists(x => x.ArticleNumber == articleNumber))
+        if (!_productRepository.Exists(x => x.ArticleNumber == product.ArticleNumber))
         {
 
-            var nutEntity = _nutRepository.GetOne(x => x.NutName == nutName);
-            var boltEntity = _boltRepository.GetOne(x => x.BoltName == boltName);
+            var nutEntity = _nutRepository.GetOne(x => x.NutName == product.NutName);
+            var boltEntity = _boltRepository.GetOne(x => x.BoltName == product.BoltName);
             if (nutEntity == null && boltEntity == null)
             {
-                nutEntity = _nutRepository.Create(new NutEntity { NutName = nutName, NutSize = nutSize });
-                boltEntity = _boltRepository.Create(new BoltEntity {  BoltName = boltName, BoltSize = boltSize });
+                nutEntity = _nutRepository.Create(new NutEntity { NutName = product.NutName, NutSize = product.NutSize });
+                boltEntity = _boltRepository.Create(new BoltEntity {  BoltName = product.BoltName, BoltSize = product.BoltSize });
             }
 
             var productEntity = new ProductEntity
             {
-                ArticleNumber = articleNumber,
-                Title = title,
-                Description = description,
-                Ingress = ingress,
-                Price = price,
+                ArticleNumber = product.ArticleNumber,
+                Company = product.Company,
+                Description = product.Description,
+                Ingress = product.Ingress,
+                Price = product.Price,
                 BoltId = boltEntity.Id,
                 NutId = nutEntity.Id,
             };
@@ -45,5 +47,25 @@ public class ProductService(ProductRepository productRepository, NutRepository n
 
         return false;
 
+    }
+
+
+    public IEnumerable<Product> GetAllProducts()
+    {
+        var result = _productRepository.GetAll();
+
+        var products = new List<Product>();
+        foreach (var product in result)
+        {
+            products.Add(new Product
+            {
+                Title = product.Title,
+                Description = product.Description,
+                Ingress = product.Ingress,
+                Price = product.Price,
+                BoltName = product.,
+
+            });
+        }
     }
 }
