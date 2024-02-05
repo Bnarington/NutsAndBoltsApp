@@ -34,7 +34,8 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                return _context.Set<TEntity>().ToList();
+                var result = _context.Set<TEntity>().ToList();
+                if (result != null) { return result; }
             }
             catch (Exception ex) { Debug.WriteLine("Error :: " + ex.Message); }
             return null!;
@@ -45,7 +46,11 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                return _context.Set<TEntity>().FirstOrDefault(predicate, null!);
+                var result = _context.Set<TEntity>().FirstOrDefault(predicate);
+                if (result != null)
+                {
+                    return result;
+                }
             }
             catch (Exception ex) { Debug.WriteLine("Error :: " + ex.Message); }
             return null!;
@@ -90,7 +95,8 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                return _context.Set<TEntity>().Any(predicate);
+                var result = _context.Set<TEntity>().Any(predicate);
+                return result;
             }
             catch (Exception ex) { Debug.WriteLine("Error :: " + ex.Message); }
             return false;

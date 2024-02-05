@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Services;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +18,35 @@ namespace Presentation
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly ProductService _productService;
+
+        public MainWindow(ProductService productService)
         {
             InitializeComponent();
+            _productService = productService;
+
+            CreateDemoproduct();
+        }
+
+        private void CreateDemoproduct ()
+        {
+            var result = _productService.CreateProduct(new Product
+            {
+                ArticleNumber = "A1",
+                Company = "Test AB",
+                Description = "Description",
+                Ingress = "Ingress",
+                Price = 200,
+                NutName = "Test Nut",
+                NutSize = 2,
+                BoltName = "Test Bolt",
+                BoltSize = 2,
+            });
+
+            if (result)
+                MessageBox.Show("Lyckades!");
+            else
+                MessageBox.Show("Misslyckades!");
         }
     }
 }

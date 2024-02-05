@@ -67,7 +67,7 @@ public class UserService(UserRepository userRepository, RoleRepository roleRepos
         return users;
     }
 
-    public IEnumerable<User> GetOneProduct(User userEntity)
+    public IEnumerable<User> GetOneUser(User userEntity)
     {
 
         var users = new List<User>();
@@ -94,11 +94,11 @@ public class UserService(UserRepository userRepository, RoleRepository roleRepos
         return users;
     }
 
-    public bool UpdateProduct(Product productEntity)
+    public bool UpdateUser(User userEntity)
     {
         try
         {
-            var product = _userRepository.GetOne(x => x.Email == productEntity.Email);
+            var product = _userRepository.GetOne(x => x.Email == userEntity.Email);
             if (product != null)
             {
                 var productToUpdate = _userRepository.Update(product);
@@ -110,7 +110,7 @@ public class UserService(UserRepository userRepository, RoleRepository roleRepos
         return false;
     }
 
-    public bool DeleteProduct(User userEntity)
+    public bool DeleteUser(User userEntity)
     {
 
         try
