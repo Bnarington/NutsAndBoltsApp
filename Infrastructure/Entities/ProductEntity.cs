@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastructure.Entities;
@@ -16,11 +17,10 @@ public class ProductEntity
     [Required, Column(TypeName = "money")]
     public decimal Price { get; set; }
     [ForeignKey(nameof(BoltEntity))]
-    public string BoltName { get; set; } = null!;
-    public decimal? BoltSize { get; set; }
+    public int BoltId { get; set; }
     [ForeignKey(nameof(NutEntity))]
-    public string NutName { get; set; } = null!;
-    public decimal? NutSize { get; set; }
+    public int NutId { get; set; }
+
 
 
     public virtual NutEntity Nut { get; set; } = null!;
