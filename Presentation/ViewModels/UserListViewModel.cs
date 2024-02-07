@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Models;
+using Presentation.Views;
 using System.Collections.ObjectModel;
 
 namespace Presentation.ViewModels;
@@ -13,6 +15,7 @@ public partial class UserListViewModel : ObservableObject
     public UserListViewModel(IServiceProvider sp)
     {
         _sp = sp;
+        ShowUserList();
     }
 
     [RelayCommand]
@@ -27,21 +30,25 @@ public partial class UserListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<UserModel> _userList = [];
 
-    [RelayCommand]
-    public void AddUserToDB()
+
+    public void ShowUserList()
     {
-        if (!string.IsNullOrWhiteSpace(UserForm.Email) && !string.IsNullOrWhiteSpace(UserForm.Password))
+        var userService = _sp.GetRequiredService<UserService>();
+
+        var users = userService.GetAllUsers();
+
+        foreach (var user in users)
         {
-            UserList.Add(UserForm);
-            UserForm = new();
+            UserList.Add(new UserModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                PhoneNumber = user.PhoneNumber,
+                RoleName = user.RoleName,
+            });
         }
     }
-
-    public string UserFullName (UserModel model)
-    {
-        var firstName = model.FirstName;
-        var lastName = model.LastName;
-
-        return firstName + " " + lastName;
-    }
 }
+

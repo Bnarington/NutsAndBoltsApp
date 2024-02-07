@@ -33,7 +33,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="0">
+                        <StackPanel Grid.Column="1">
                             <TextBlock Text="{Binding UserFullName }" />
                             <TextBlock Text="{Binding Email}" />
                             <TextBlock Text="{Binding Password}" />
