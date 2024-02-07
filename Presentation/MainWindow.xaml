@@ -4,9 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation"
+        
+        xmlns:viewmodels="clr-namespace:Presentation.ViewModels"
+        xmlns:views="clr-namespace:Presentation.Views"
+        
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <ContentControl Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
 
+                <DataTemplate DataType="{x:Type viewmodels:UserListViewModel}">
+                    <views:UserListView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:UserAddViewModel}">
+                    <views:UserAddView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:UserUpdateViewModel}">
+                    <views:UserUpdateView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:ProductListViewModel}">
+                    <views:ProductListView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:ProductAddViewModel}">
+                    <views:ProductAddView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:ProductUpdateViewModel}">
+                    <views:ProductUpdateView />
+                </DataTemplate>
+
+
+            </ContentControl.Resources>
+        </ContentControl>
     </Grid>
 </Window>
