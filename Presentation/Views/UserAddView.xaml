@@ -51,7 +51,7 @@
                   DisplayMemberPath="RoleName"/>
 
 
-        <Button Grid.Row="8" Content="Navigate to User List" Command="{Binding NavigateToUserListCommand}" />
+        <Button Grid.Row="8" Content="Navigate to User List" Command="{Binding NavigateToUserListCommand}" HorizontalAlignment="left" Margin="25,0"/>
 
         <Button Content="Add User" Grid.Row="7" Margin="10" HorizontalAlignment="Center" Command="{Binding CreateUserCommand}" />
 

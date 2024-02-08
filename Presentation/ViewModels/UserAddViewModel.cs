@@ -4,88 +4,84 @@ using Infrastructure.DTOs;
 using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace Presentation.ViewModels;
-
-public partial class UserAddViewModel : ObservableObject
+namespace Presentation.ViewModels
 {
-    private readonly RoleService _roleService;
-    private readonly IServiceProvider _sp;
-
-    public UserAddViewModel(IServiceProvider sp, RoleService rs)
+    public partial class UserAddViewModel : ObservableObject
     {
-        _sp = sp;
-        _roleService = rs;
-        LoadRoles();
-    }
+        private readonly RoleService _roleService;
+        private readonly IServiceProvider _sp;
 
-    public ObservableCollection<RoleModel> Roles { get; } = new ObservableCollection<RoleModel>();
-
-    private RoleModel _selectedRole;
-    public RoleModel SelectedRole
-    {
-        get { return _selectedRole; }
-        set { SetProperty(ref _selectedRole, value); }
-    }
-
-    private void LoadRoles()
-    {
-        try
+        public UserAddViewModel(IServiceProvider sp, RoleService rs)
         {
-            var roleNames = new string[] { "Admin", "User", "Super User" }; // Example role names to retrieve or create
-            foreach (var roleName in roleNames)
+            _sp = sp;
+            _roleService = rs;
+            LoadRoles();
+        }
+
+        public ObservableCollection<RoleModel> Roles { get; } = new ObservableCollection<RoleModel>();
+
+        private RoleModel _selectedRole;
+        public RoleModel SelectedRole
+        {
+            get { return _selectedRole; }
+            set { SetProperty(ref _selectedRole, value); }
+        }
+
+        private void LoadRoles()
+        {
+            try
             {
-                var role = _roleService.GetOrCreateRole(roleName);
-                if (role != null)
+                var roleNames = new string[] { "Admin", "User", "Super User" }; // Example role names to retrieve or create
+                foreach (var roleName in roleNames)
                 {
-                    Roles.Add(new RoleModel { RoleName = roleName }); // Set only the RoleName property
+                    var role = _roleService.GetOrCreateRole(roleName);
+                    if (role != null)
+                    {
+                        Roles.Add(new RoleModel { RoleName = roleName }); // Set only the RoleName property
+                    }
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show("An error occurred while loading roles: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
-
-    [RelayCommand]
-    private void NavigateToUserList()
-    {
-        var mainViewModel = _sp.GetRequiredService<MainViewModel>();
-        mainViewModel.CurrentViewModel = _sp.GetRequiredService<UserListViewModel>();
-    }
-
-    [ObservableProperty]
-    private UserModel _userForm = new();
-    [ObservableProperty]
-    private ObservableCollection<UserModel> _userList = [];
-
-    [RelayCommand]
-    public void CreateUser()
-    {
-        try
-        {
-            var userService = _sp.GetRequiredService<UserService>();
-
-            var newUser = userService.CreateUser(UserForm.FirstName, UserForm.LastName, UserForm.Email, UserForm.Password, UserForm.PhoneNumber!, SelectedRole.RoleName);
-            if (newUser != null)
+            catch (Exception ex)
             {
-                NavigateToUserList();
-            }
-            else
-            {
-                MessageBox.Show("User creation failed. Please check your input and try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred while loading roles: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        catch (Exception ex) { MessageBox.Show("An error occurred while creating a user. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 
+        [RelayCommand]
+        private void NavigateToUserList()
+        {
+            var mainViewModel = _sp.GetRequiredService<MainViewModel>();
+            mainViewModel.CurrentViewModel = _sp.GetRequiredService<UserListViewModel>();
+        }
+
+        [ObservableProperty]
+        private UserModel _userForm = new();
+
+        [RelayCommand]
+        public void CreateUser()
+        {
+            try
+            {
+                var userService = _sp.GetRequiredService<UserService>();
+
+                var newUser = userService.CreateUser(UserForm.FirstName, UserForm.LastName, UserForm.Email, UserForm.Password, UserForm.PhoneNumber, SelectedRole.RoleName);
+                if (newUser != null)
+                {
+                    NavigateToUserList();
+                }
+                else
+                {
+                    MessageBox.Show("User creation failed. Please check your input and try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while creating a user. Please try again later." + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
-
-
 }
-
-
-
-

@@ -1,34 +1,45 @@
 ﻿using Infrastructure.Contexts;
 using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Repositories;
-
-public class UserRepository(DataContext context) : BaseRepository<UserEntity>(context)
+namespace Infrastructure.Repositories
 {
-    private readonly DataContext _context = context;
-
-    public override IEnumerable<UserEntity> GetAll()
+    public class UserRepository : BaseRepository<UserEntity>
     {
-        try
+        public UserRepository(DataContext context) : base(context)
         {
-            return _context.Users.Include(x => x.Role).ToList();
-
-
         }
-        catch (Exception ex) { Debug.WriteLine("Error :: " + ex.Message); }
-        return null!;
-    }
 
-    public override UserEntity GetOne(Expression<Func<UserEntity, bool>> predicate)
-    {
-        try
+        public override IEnumerable<UserEntity> GetAll()
         {
-            return _context.Users.Include(x => x.Role).FirstOrDefault(predicate, null!);
+            try
+            {
+                // Include related entities using EF Core Include method
+                return _context.Users.Include(x => x.Role).ToList();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error :: " + ex.Message);
+                throw; // Rethrow the exception to propagate it
+            }
         }
-        catch (Exception ex) { Debug.WriteLine("Error :: " + ex.Message); }
-        return null!;
+
+        public override UserEntity GetOne(Expression<Func<UserEntity, bool>> predicate)
+        {
+            try
+            {
+                // Simplify the query and avoid using null!
+                return _context.Users.Include(x => x.Role).FirstOrDefault(predicate)!;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error :: " + ex.Message);
+                throw; // Rethrow the exception to propagate it
+            }
+        }
     }
 }
