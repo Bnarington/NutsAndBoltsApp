@@ -4,7 +4,6 @@ using Infrastructure.DTOs;
 using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Models;
-using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;

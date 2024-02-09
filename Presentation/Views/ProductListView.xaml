@@ -11,12 +11,46 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel>
-            <Label Content="Product List View" />
-            <Button Content="Navigate to Add Product" Command="" />
-        </StackPanel>
+    <Grid Margin="0,10,0,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        
+        <Label Content="Product List" Grid.Row="1" Margin="25" />
+
+        <ListView x:Name="ViewUserList" ItemsSource="{Binding ProductList}" SelectedItem="{Binding SelectedProduct}" Grid.Row="1" Margin="25,50,25,10">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="{Binding ArticleNumber }" />
+                            <TextBlock Text="{Binding Company}" />
+                            <TextBlock Text="{Binding Description}" />
+                            <TextBlock Text="{Binding Ingress}" />
+                            <TextBlock Text="{Binding Price}" />
+                            <TextBlock Text="{Binding BoltName}" />
+                            <TextBlock Text="{Binding BoltSize}" />
+                            <TextBlock Text="{Binding NutName}" />
+                            <TextBlock Text="{Binding NutSize}" />
+                        </StackPanel>
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button Grid.Column="1"  Content="Update Product" Command="{Binding NavigateToUpdateProductCommand}" CommandParameter="{Binding SelectedItem, ElementName=ViewUserList}" Width="100"  Margin="0, 25"/>
+            <Button Grid.Column="2" Content="Add Product" Command="{Binding NavigateToAddProductCommand}" Width="100"  Margin="25, 25"/>
+            <Button Grid.Column="3" Content="Delete Product" Command="{Binding DeleteProductCommand}" CommandParameter="{Binding SelectedProduct}" Width="100"  Margin="0, 25"/>
+            <Button Grid.Column="3" Content="Main Menu" Command="{Binding NavigateToMainMenuCommand}" CommandParameter="{Binding SelectedProduct}" Width="100"  Margin="25, 25"/>
+        </StackPanel>
     </Grid>
 </UserControl>

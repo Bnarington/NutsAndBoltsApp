@@ -42,6 +42,13 @@ namespace Presentation.ViewModels
         }
 
         [RelayCommand]
+        private void NavigateToMainMenu()
+        {
+            var mainViewModel = _serviceProvider.GetService<MainViewModel>();
+            mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<MainMenuViewModel>();
+        }
+
+        [RelayCommand]
         private void NavigateToUpdateUser(UserModel selectedUser)
         {
             // Navigate to the update user view if a user is selected

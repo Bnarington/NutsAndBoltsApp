@@ -44,6 +44,8 @@ public partial class App : Application
                 services.AddTransient<ProductListViewModel>();
                 services.AddTransient<ProductUpdateView>();
                 services.AddTransient<ProductUpdateViewModel>();
+                services.AddTransient<MainMenuView>();
+                services.AddTransient<MainMenuViewModel>();
 
 
 

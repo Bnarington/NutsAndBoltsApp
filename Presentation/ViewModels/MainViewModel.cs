@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace Presentation.ViewModels
         public MainViewModel(IServiceProvider sp)
         {
             _sp = sp;
-            CurrentViewModel = _sp.GetRequiredService<UserListViewModel>();
+            CurrentViewModel = _sp.GetRequiredService<MainMenuViewModel>();
         }
+
     }
 }

@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Presentation.Views.MainMenuView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Presentation.Views"
+      xmlns:viewmodels="clr-namespace:Presentation.ViewModels"
+      xmlns:models="clr-namespace:Presentation.Models"
+      d:DataContext="{d:DesignInstance Type=viewmodels:MainMenuViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="800"
+      >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Main Menu Title -->
+        <Label Grid.Row="0" Content="Main Menu" HorizontalAlignment="Center" FontSize="32" Margin="0,20,0,0" />
+
+        <!-- Main Menu Buttons -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- First Button -->
+            <Button Grid.Column="0" Content="User Page" Command="{Binding NavigateToUserListCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="100" Margin="20"/>
+
+            <!-- Second Button -->
+            <Button Grid.Column="1" Content="Product Page" Command="{Binding NavigateToProductListCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="100" Margin="20"/>
+        </Grid>
+
+        <!-- Exit Button -->
+        <Button Grid.Row="2" Content="Exit" Background="Red" Foreground="White" Command="{Binding ExitCommand}" HorizontalAlignment="Center" Width="200" Height="50" Margin="0,20" />
+    </Grid>
+</UserControl>
